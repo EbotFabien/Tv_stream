@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% include "nav.html" %}
+{% block content%}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Start</th>
+        <th scope="col">end</th>
+        <th scope="col">Status</th>
+        <th scope="col">View</th>
+        {%if current_user.Type == 'Broadcaster'%}
+        <th scope="col"><a class="navbar-brand" href="{{ url_for('broadacast.create',id=ide) }}">New Session</a></th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in  lives%}
+        <tr>
+            <th scope="row">{{i.id}}</th>
+            <td>{{i.Title}}</td>
+            <td>{{i.start}}</td>
+            <td>{{i.end}}</td>
+            <td>{{i.status}}</td>
+            {% if i.status == True %} 
+                <td><a href="{{ url_for('broadacast.session',id=i.id) }}" class="card-link">View</a></td>
+                {%if current_user.Type == 'Broadcaster'%}
+                <td><a href="{{ url_for('broadacast.stop',id=i.id) }}" class="card-link">Stop</a></td>
+                {% endif %}
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock content %} 

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% include "nav.html" %}
+{% block content%}
+
+List of Broadcasters
+
+{% for i in loc %}
+    <div class="card" style="width: 18rem;border: 3px solid black;">
+        <div class="card-body">
+        <h5 class="card-title">Name {{i.username}}</h5>
+        <p class="card-text">Category: {{i.category}} </p>
+        
+        
+
+        </div>
+        
+        <span><a class="navbar-brand" href="{{ url_for('broadacast.singlelives',id=i.id) }}"><button type="button" class="btn btn-success">Sessions</button></a></span>
+        
+    </div>
+{% endfor %}
+
+
+
+{% endblock content %} 

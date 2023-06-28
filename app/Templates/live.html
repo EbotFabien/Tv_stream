@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% include "nav.html" %}
+{% block content%}
+
+
+<head>
+  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+  <link rel="canonical" href="https://livepush.io/hls-player/index.html">
+</head>
+<body>
+  <input type="hidden" id="url" name="url" value={{url}}>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <video id="video" controls></video>
+  {% for i in lives %}
+    <div class="card" style="width: 18rem;border: 3px solid black;">
+        <div class="card-body">
+        <h5 class="card-title">Title: {{i.Title}}</h5>
+        <p class="card-text">start: {{i.start}} </p>
+        
+        
+
+        </div>
+        
+        <span><a class="navbar-brand" href="{{ url_for('broadacast.session',id=i.id) }}"><button type="button" class="btn btn-success">View</button></a></span>
+        
+    </div>
+ {% endfor %}
+  <script>
+    var URl=document.getElementById('url').value;
+  if(Hls.isSupported())
+  {
+      var video = document.getElementById('video');
+      var hls = new Hls();
+      hls.loadSource(URl);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED,function()
+      {
+        var playpromise=video.play();
+        if (playPromise !== undefined) {
+          playPromise.then(_ => {
+            // Automatic playback started!
+            // Show playing UI.
+            video.pause();
+          })
+          .catch(error => {
+            // Auto-play was prevented
+            // Show paused UI.
+          });
+        }
+      });
+  }
+  else if (video.canPlayType('application/vnd.apple.mpegurl'))
+  {
+      video.src =URl;
+      video.addEventListener('canplay',function()
+      {
+        var playpromise=video.play();
+        if (playPromise !== undefined) {
+          playPromise.then(_ => {
+            // Automatic playback started!
+            // Show playing UI.
+            video.pause();
+          })
+          .catch(error => {
+            // Auto-play was prevented
+            // Show paused UI.
+          });
+        }
+      });
+  }
+  </script>
+</body>
+
+{% endblock content %} 
