@@ -1,31 +1,59 @@
-{% extends "base.html" %}
-{% include "nav.html" %}
-{% block content%}
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Title</th>
-        <th scope="col">Start</th>
-        <th scope="col">end</th>
-        <th scope="col">Status</th>
-        <th scope="col">View</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for i in  lives%}
-        <tr>
-            <th scope="row">{{i.id}}</th>
-            <td>{{i.Title}}</td>
-            <td>{{i.start}}</td>
-            <td>{{i.end}}</td>
-            <td>{{i.status}}</td>
-            {% if i.status == True %} 
-                <td><a href="{{ url_for('broadacast.session',id=i.id) }}" class="card-link">View</a></td>
-            {% endif %}
-        </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+<!DOCTYPE html>
+<html>
 
-{% endblock content %} a
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+  {% if title %}
+  <title>Flask B - Dashboard</title>
+  {% else %}
+  <title>Bus Management System</title>
+  {% endif %}
+</head>
+
+<body style="min-height: 100vh;">
+  {% include "nav.html" %}
+
+  <div style="padding: 2rem; ">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Start</th>
+          <th scope="col">end</th>
+          <th scope="col">Status</th>
+          <th scope="col">View</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in lives %}
+        <tr>
+          <th scope="row">{{i.id}}</th>
+          <td>{{i.Title}}</td>
+          <td>{{i.start}}</td>
+          <td>{{i.end}}</td>
+          <td>{{i.status}}</td>
+          {% if i.status == True %}
+          <td>
+            <a href="{{ url_for('broadacast.session',id=i.id) }}" class="card-link">View</a>
+          </td>
+          {% else %}
+          <td>
+            <a href="#" class="card-link">Ended</a>
+          </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
