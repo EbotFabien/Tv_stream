@@ -1,5 +1,5 @@
 from flask import current_app
-from itsdangerous import  TimedJSONWebSignatureSerializer as Serializer
+from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
 import jwt, uuid, os
 from datetime import datetime
 from app import db,login_manager

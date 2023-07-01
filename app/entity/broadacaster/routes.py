@@ -67,3 +67,8 @@ def stop(id):
    
 
     return redirect(url_for('broadacast.singlelives',id=id))
+
+
+@broadacast.route('/broadacast/test')
+def test():
+    return render_template('test.html')

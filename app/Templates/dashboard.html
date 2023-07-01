@@ -1,24 +1,40 @@
-{% extends "base.html" %}
-{% include "nav.html" %}
-{% block content%}
+<!DOCTYPE html>
+<html>
 
-List of Broadcasters
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-{% for i in loc %}
-    <div class="card" style="width: 18rem;border: 3px solid black;">
-        <div class="card-body">
-        <h5 class="card-title">Name {{i.username}}</h5>
-        <p class="card-text">Category: {{i.category}} </p>
-        
-        
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    {% if title %}
+    <title>Flask B - Dashboard</title>
+    {% else %}
+    <title>Bus Management System</title>
+    {% endif %}
+</head>
 
+<body style="min-height: 100vh;">
+    {% include "nav.html" %}
+    {% block content%}
+
+    <div style="padding: 2rem; ">
+        <h3>List of Broadcasters</h3>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); column-gap: 2rem;">
+            {% for i in loc %}
+            <div class="card" style="background: #eee;">
+                <div class="card-body">
+                    <h5 class="card-title">Name {{i.username}}</h5>
+
+                    <a class="navbar-brand" href="{{ url_for('broadacast.singlelives',id=i.id) }}">Sessions</a>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        
-        <span><a class="navbar-brand" href="{{ url_for('broadacast.singlelives',id=i.id) }}"><button type="button" class="btn btn-success">Sessions</button></a></span>
-        
     </div>
-{% endfor %}
 
-
-
-{% endblock content %} 
+    {% endblock content %}

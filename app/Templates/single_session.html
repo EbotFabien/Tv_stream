@@ -1,37 +1,59 @@
-{% extends "base.html" %}
-{% include "nav.html" %}
-{% block content%}
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Title</th>
-        <th scope="col">Start</th>
-        <th scope="col">end</th>
-        <th scope="col">Status</th>
-        <th scope="col">View</th>
-        {%if current_user.Type == 'Broadcaster'%}
-        <th scope="col"><a class="navbar-brand" href="{{ url_for('broadacast.create',id=ide) }}">New Session</a></th>
-        {% endif %}
-      </tr>
-    </thead>
-    <tbody>
-    {% for i in  lives%}
-        <tr>
-            <th scope="row">{{i.id}}</th>
-            <td>{{i.Title}}</td>
-            <td>{{i.start}}</td>
-            <td>{{i.end}}</td>
-            <td>{{i.status}}</td>
-            {% if i.status == True %} 
-                <td><a href="{{ url_for('broadacast.session',id=i.id) }}" class="card-link">View</a></td>
-                {%if current_user.Type == 'Broadcaster'%}
-                <td><a href="{{ url_for('broadacast.stop',id=i.id) }}" class="card-link">Stop</a></td>
-                {% endif %}
-            {% endif %}
-        </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+<!DOCTYPE html>
+<html>
 
-{% endblock content %} 
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+  {% if title %}
+  <title>Flask B - Dashboard</title>
+  {% else %}
+  <title>Bus Management System</title>
+  {% endif %}
+</head>
+
+<body style="min-height: 100vh;">
+  {% include "nav.html" %}
+  {% block content%}
+
+  <div style="padding: 2rem; ">
+    <h4>{%if current_user.Type == 'Broadcaster'%}
+     <a class="navbar-brand" href="{{ url_for('broadacast.create',id=ide) }}">New Session</a>
+      {% endif %}</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Start</th>
+          <th scope="col">end</th>
+          <th scope="col">Status</th>
+          <th scope="col">View</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in lives%}
+        <tr>
+          <th scope="row">{{i.id}}</th>
+          <td>{{i.Title}}</td>
+          <td>{{i.start}}</td>
+          <td>{{i.end}}</td>
+          <td>{{i.status}}</td>
+          {% if i.status == True %}
+          <td><a href="{{ url_for('broadacast.session',id=i.id) }}" class="card-link">View</a></td>
+          {%if current_user.Type == 'Broadcaster'%}
+          <td><a href="{{ url_for('broadacast.stop',id=i.id) }}" class="card-link">Stop</a></td>
+          {% endif %}
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% endblock content %}

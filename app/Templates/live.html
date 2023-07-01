@@ -1,74 +1,75 @@
-{% extends "base.html" %}
-{% include "nav.html" %}
-{% block content%}
-
+<!DOCTYPE html>
+<html>
 
 <head>
-  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="anonymous"></script>
   <link rel="canonical" href="https://livepush.io/hls-player/index.html">
+  {% if title %}
+  <title>Flask B - Dashboard</title>
+  {% else %}
+  <title>Bus Management System</title>
+  {% endif %}
 </head>
-<body>
+
+<body style="min-height: 100vh;">
+  {% include "nav.html" %}
+  {% block content%}
+
+
   <input type="hidden" id="url" name="url" value={{url}}>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <video id="video" controls></video>
-  {% for i in lives %}
-    <div class="card" style="width: 18rem;border: 3px solid black;">
-        <div class="card-body">
-        <h5 class="card-title">Title: {{i.Title}}</h5>
-        <p class="card-text">start: {{i.start}} </p>
-        
-        
-
-        </div>
-        
-        <span><a class="navbar-brand" href="{{ url_for('broadacast.session',id=i.id) }}"><button type="button" class="btn btn-success">View</button></a></span>
-        
-    </div>
- {% endfor %}
+  <div style="width: 400px; height: auto; margin: 5rem auto;">
+    <video id="video" controls style="width: 100%; height: 100%;"></video>
+  </div>
   <script>
-    var URl=document.getElementById('url').value;
-  if(Hls.isSupported())
-  {
+    var URl = document.getElementById('url').value;
+    if (Hls.isSupported()) {
       var video = document.getElementById('video');
       var hls = new Hls();
       hls.loadSource(URl);
       hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED,function()
-      {
-        var playpromise=video.play();
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        var playpromise = video.play();
         if (playPromise !== undefined) {
           playPromise.then(_ => {
             // Automatic playback started!
             // Show playing UI.
             video.pause();
           })
-          .catch(error => {
-            // Auto-play was prevented
-            // Show paused UI.
-          });
+            .catch(error => {
+              // Auto-play was prevented
+              // Show paused UI.
+            });
         }
       });
-  }
-  else if (video.canPlayType('application/vnd.apple.mpegurl'))
-  {
-      video.src =URl;
-      video.addEventListener('canplay',function()
-      {
-        var playpromise=video.play();
+    }
+    else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = URl;
+      video.addEventListener('canplay', function () {
+        var playpromise = video.play();
         if (playPromise !== undefined) {
           playPromise.then(_ => {
             // Automatic playback started!
             // Show playing UI.
             video.pause();
           })
-          .catch(error => {
-            // Auto-play was prevented
-            // Show paused UI.
-          });
+            .catch(error => {
+              // Auto-play was prevented
+              // Show paused UI.
+            });
         }
       });
-  }
+    }
   </script>
 </body>
 
-{% endblock content %} 
+{% endblock content %}

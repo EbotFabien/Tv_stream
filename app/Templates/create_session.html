@@ -1,46 +1,65 @@
-{% extends "base.html" %}
-{% include "nav.html" %}
-{% block content%}
-<div class="content-section">
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-         <legend class="border-bottom mb4">Create Session</legend>
-       
-        <div class="form-group">
-        {{form.title.label(class="form-control-label")}}
-    
-        {% if form.title.errors %}
-            {{ form.title(class="form-control form-control-lg is-invalid") }}
-            <div class="invalid-feedback">
-                {% for error in form.title.errors %}
-                    <span>{{ error }}</span>
-                {% endfor %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    {% if title %}
+    <title>Flask B - Dashboard</title>
+    {% else %}
+    <title>Bus Management System</title>
+    {% endif %}
+</head>
+
+<body style="min-height: 100vh;">
+    {% include "nav.html" %}
+    {% block content%}
+    <div class="content-section" style="max-width: 320px; display: flex; justify-content: center; margin: 3rem auto;">
+        <form method="POST" style="width: 100%;">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb4">Create Session</legend>
+
+                <div class="form-group">
+                    {{form.title.label(class="form-control-label")}}
+
+                    {% if form.title.errors %}
+                    {{ form.title(class="form-control form-control-sm is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.title.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{form.title(class="form-control form-control-sm")}}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{form.key.label(class="form-control-label")}}
+
+                    {% if form.key.errors %}
+                    {{ form.key(class="form-control form-control-sm is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.key.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{form.key(class="form-control form-control-sm")}}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{form.submit(class="btn btn-primary btn-block")}}
             </div>
-            {% else %}
-                {{form.title(class="form-control form-control-lg")}}
-            {% endif %}
-    </div>
-        <div class="form-group">
-        {{form.key.label(class="form-control-label")}}
-    
-        {% if form.key.errors %}
-            {{ form.key(class="form-control form-control-lg is-invalid") }}
-            <div class="invalid-feedback">
-                {% for error in form.key.errors %}
-                    <span>{{ error }}</span>
-                {% endfor %}
-            </div>
-            {% else %}
-                {{form.key(class="form-control form-control-lg")}}
-            {% endif %}
-    </div>
-    </fieldset>
-    <div class="form-group">
-            {{form.submit(class="btn btn-outline-info")}}    
-        </div>
-    </form>
-    
+        </form>
+
     </div>
 
-{% endblock content %}  
+    {% endblock content %}
