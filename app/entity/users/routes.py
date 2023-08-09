@@ -9,6 +9,8 @@ from sqlalchemy import or_, and_, desc,asc
 from werkzeug.utils import secure_filename
 from flask import  url_for,current_app
 import os
+from postmarker.core import PostmarkClient
+
 
 
 
@@ -19,8 +21,15 @@ import os
 users =Blueprint('users',__name__)
 
 
-@users.route('/login',methods=['GET','POST'])
+@users.route('/',methods=['GET','POST'])
 def login():
+    postmark = PostmarkClient(server_token='9be26bfe-05d9-4780-bdf3-62d91c208f06')
+    postmark.emails.send(
+    From='admin@odaaay.com',
+    To='hello@odaaay.com',
+    Subject='Postmark test',
+    HtmlBody=render_template('welcome.html',name="Michelle")
+    )
     if current_user.is_authenticated:
         if current_user.Type=='admin':
             return redirect(url_for('users.dashboard'))
